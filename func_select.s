@@ -15,55 +15,42 @@ format_print:   .string "x+y=%lu\n"
 
 .text
 
-l1:
-    call aa
-    jmp done
-l2:
-    call bb
-    jmp done
-l3:
-    call cc
-    jmp done
-l4:
-    call dd
-    jmp done
-l5:
-    call ee
-    jmp done
-l6:
-    call ff
-    jmp done
+
     
 .globl select
 .type select, @function
 select:
     push    %rbp
-    push    %rbx
     movq    %rsp, %rbp
 
-    sub     $8, %rsp
+    sub $50, %rdi
+    cmpq $10, %rdi
+    je .l1
+    cmpq $5, %rdi
+    ja .l2
+    jmp *.jump_table(,%rdi,8)
 
-    movq    $format_d, %rdi
-    leaq    -8(%rbp), %rsi
-    movq    $0, %rax
-    call    scanf
+.l1:
+    call aa
+    jmp .done
+.l2:
+    call bb
+    jmp .done
+.l3:
+    call cc
+    jmp .done
+.l4:
+    call dd
+    jmp .done
+.l5:
+    call ee
+    jmp .done
+.l6:
+    call ff
+    jmp .done
 
-    movq    -8(%rbp), %rbx
-
-    movq    $format_d, %rdi
-    leaq    -8(%rbp), %rsi
-    movq    $0, %rax
-    call    scanf
-
-    movq    $format_print, %rdi
-    movq    -8(%rbp), %rsi
-    addq    %rbx, %rsi
-    movq    $0, %rax
-    call    printf
-
+.done:
     movq    %rbp, %rsp
-    pop     %rbx
     pop     %rbp
 
-    xorq    %rax, %rax
     ret    
