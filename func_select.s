@@ -1,9 +1,11 @@
 .section .rodata
-format_d:       .string "%lu"
-format_print:   .string "x+y=%lu\n"
+format_d:       .string "hey"
+format_invalid:  .string "invalid option!\n"
+format_print:   .string "len first: %lu\n"
+format_lengths: .string "first pstring length: %d, second pstring length: %d\n"
 
 .align 8 # Align address to multiple of 8
-.jump_table:
+.L10:
     .quad .L1 # Case 50 or 60: print strings
     .quad .L2 # Case defualt: invalid option
     .quad .L3 # Case 52 : replaceChar
@@ -17,38 +19,52 @@ format_print:   .string "x+y=%lu\n"
 
 
     
-.globl select
-.type select, @function
-select:
+.globl run_func
+.type run_func, @function
+run_func:
     push    %rbp
     movq    %rsp, %rbp
 
     sub $50, %rdi
     cmpq $10, %rdi
-    je .l1
+    je .L1
     cmpq $5, %rdi
-    ja .l2
-    jmp *.jump_table(,%rdi,8)
+    ja .L2
+    jmp *.L10(,%rdi,8)
 
-.l1:
-    call aa
+.L1:
+    movq %rsi, %rdi
+    call pstrlen
+    movq %rax, %rsi
+    movq %rdx, %rdi
+    call pstrlen
+    movq %rax, %rdx
+    movq $format_lengths, %rdi
+    movq $0, %rax
+    call printf
     jmp .done
-.l2:
-    call bb
+
+.L2:    #defualt
+    movq $format_invalid, %rdi  #print invalid option
+    xorq %rax, %rax    #make rax 0 before calling printf
+    call printf
     jmp .done
-.l3:
+.L3:
+    movq $0, %rax
     call cc
     jmp .done
-.l4:
+.L4:
+    movq $0, %rax
     call dd
     jmp .done
-.l5:
+.L5:
+    movq $0, %rax
     call ee
     jmp .done
-.l6:
+.L6:
+    movq $0, %rax
     call ff
     jmp .done
-
 .done:
     movq    %rbp, %rsp
     pop     %rbp

@@ -14,9 +14,17 @@ void dd(){
     printf("dd\n");
 }
 void ee(){
+    printf("ee\n");
+}
+void ff(){
     printf("ff\n");
 }
 
 void main(){
-    select(50);
+    printf("kk\n");
+    int x;
+    scanf("%d", &x);
+    select(x);
+    printf("kk\n");
+
 }

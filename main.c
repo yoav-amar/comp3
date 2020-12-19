@@ -1,8 +1,42 @@
 #include <stdio.h>
 #include "pstring.h"
+void aa(){
+    printf("aa\n");
+}
+void bb(){
+    printf("bb\n");
+}
+void cc(){
+    printf("cc\n");
+}
+void dd(){
+    printf("dd\n");
+}
+void ee(){
+    printf("ee\n");
+}
+void ff(){
+    printf("ff\n");
+}
+void main() {
 
-int main() {
+	Pstring p1;
+	Pstring p2;
+	int len;
+	int opt;
 
-	run_main();
-	return 0;
+	// initialize first pstring
+	scanf("%d", &len);
+	scanf("%s", p1.str);
+	p1.len = len;
+
+	// initialize second pstring
+	scanf("%d", &len);
+	scanf("%s", p2.str);
+	p2.len = len;
+
+	// select which function to run
+	scanf("%d", &opt);
+	run_func(opt, &p1, &p2);
+
 }
