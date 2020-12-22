@@ -11,7 +11,7 @@ Pstring* replaceChar(Pstring* pstr, char oldChar, char newChar){
             pstr->str[i] = newChar;
         }
     }
-    return newChar;
+    return pstr;
 }
 
 Pstring* pstrijcpy(Pstring* dst, Pstring* src, char i, char j){

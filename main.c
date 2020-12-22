@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "pstring.h"
+#include "func_select.h"
 void aa(){
     printf("aa\n");
 }
@@ -30,6 +31,7 @@ void main() {
 	scanf("%s", p1.str);
 	p1.len = len;
 
+
 	// initialize second pstring
 	scanf("%d", &len);
 	scanf("%s", p2.str);
@@ -38,5 +40,6 @@ void main() {
 	// select which function to run
 	scanf("%d", &opt);
 	run_func(opt, &p1, &p2);
+
 
 }

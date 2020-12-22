@@ -1,7 +1,7 @@
 .section .rodata
 format_d:       .string "hey"
 format_invalid:  .string "invalid option!\n"
-format_print:   .string "len first: %lu\n"
+format_print:   .string "length: %d, string: %s\n"
 format_lengths: .string "first pstring length: %d, second pstring length: %d\n"
 
 .align 8 # Align address to multiple of 8
@@ -45,8 +45,8 @@ run_func:
     jmp .done
 
 .L2:    #defualt
-    movq $format_invalid, %rdi  #print invalid option
-    xorq %rax, %rax    #make rax 0 before calling printf
+    movq $format_invalid, %rdi  # print invalid option
+    xorq %rax, %rax    # make rax 0 before calling printf
     call printf
     jmp .done
 .L3:
@@ -58,8 +58,27 @@ run_func:
     call dd
     jmp .done
 .L5:
+    pushq %rdx
+    movq %rsi, %rdi
+    call swapCase
+    movq %rax, %rdx
+    add $1, %rdx
+    movq %rax, %rdi
+    call pstrlen
+    movq %rax, %rsi    
     movq $0, %rax
-    call ee
+    movq $format_print, %rdi
+    call printf
+    popq %rdi
+    call swapCase
+    movq %rax, %rdx
+    add $1, %rdx
+    movq %rax, %rdi
+    call pstrlen
+    movq %rax, %rsi    
+    movq $0, %rax
+    movq $format_print, %rdi
+    call printf
     jmp .done
 .L6:
     movq $0, %rax
