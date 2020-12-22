@@ -25,7 +25,7 @@ void main() {
 	Pstring p2;
 	int len;
 	int opt;
-
+/*
 	// initialize first pstring
 	scanf("%d", &len);
 	scanf("%s", p1.str);
@@ -40,6 +40,19 @@ void main() {
 	// select which function to run
 	scanf("%d", &opt);
 	run_func(opt, &p1, &p2);
+*/
+	p1.len = 3;
+	p1.str[0] = '1';
+	p1.str[1] = 'p';
+	p1.str[2] = 'c';
+
+	p2.len = 3;
+	p2.str[0] = '1';
+	p2.str[1] = 'd';
+	p1.str[2] = 'c';
+	int x = pstrijcmp(&p1, &p2, 0, 1);
+	printf("str: %d\n", x);
+
 
 
 }
